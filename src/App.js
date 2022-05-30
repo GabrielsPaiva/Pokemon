@@ -1,20 +1,26 @@
 import React from "react"
+import Main from "./components/Main"
 import Navbar from "./components/navBar"
-import "./App.css"
-import Searchbar from "./components/SearchBar"
-import {searchPokemon} from "./components/Api"
 
-const onSearchHandler = async (pokemon) => {
-  console.log(pokemon)
+// styles
+import { createGlobalStyle } from "styled-components"
+
+const GlobalStyle = createGlobalStyle`
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
+`
 
-export default class App extends React.Component{
-  render(){
-    return(
+
+export default class App extends React.Component {
+  render() {
+    return (
       <>
-     
+        <GlobalStyle />
         <Navbar />
-        <Searchbar onSearch={onSearchHandler} />
+        <Main />
       </>
     )
   }
