@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import media from "styled-media-query"
 
 export const SearchBarDiv = styled.div`
 background-color: whitesmoke;
@@ -12,18 +13,26 @@ align-items: center;
         justify-content: center;
         text-decoration: none;
         width: 12%;
+        ${media.lessThan('medium')`
+        width: 35%;
+        `}
 }
 `
 export const SearchInput = styled.input`
 background-color: #2C2C2C;
 color: white;
 font-size: 22px;
+text-align: center;
 border: none;
 border-radius: 5px;
 margin: 0.5em 0 1em 0;
-width: 25%;
+width: 20%;
 height: 2em;
 outline: none;
+
+${media.lessThan('medium')`
+   width: 60%;
+`}
 `
 export const SubmitButton = styled.button`
 background-color: white;
@@ -33,6 +42,7 @@ border-radius: 10px;
 width: 80%;
 line-height: 50px;
 transition: all 0.5s ease-in-out;
+overflow-x: hidden;
 cursor: pointer;
 
 &:hover{
