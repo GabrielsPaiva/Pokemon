@@ -22,7 +22,6 @@ export default function Main() {
 
     useEffect(() => {
         getPokemons()
-
     }, [])
 
     const showAll = () => {

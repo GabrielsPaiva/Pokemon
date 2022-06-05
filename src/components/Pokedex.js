@@ -71,7 +71,8 @@ export default function Pokedex({ pokemon }) {
 
     useEffect(() => {
         pokemonFavoriteList()
-    }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [] )
     const pokedexReturn = () => {
         return (
             <S.Div>
