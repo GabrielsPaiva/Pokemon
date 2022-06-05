@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Link } from "react-router-dom"
 import * as S from "../styles/SearchBarStyle"
 
 export default function Searchbar({ onSearch }) {
@@ -15,7 +16,7 @@ export default function Searchbar({ onSearch }) {
     return (
         <S.SearchBarDiv>
             <S.SearchInput onChange={(e) => { onChangeHandler(e) }} placeholder="Buscar pokemon" />
-            <S.SubmitButton onClick={() => { onButtonClickHandler() }}>Buscar</S.SubmitButton>
+            <Link to="wiki" className="buttonLink"><S.SubmitButton onClick={() => { onButtonClickHandler() }}>Buscar</S.SubmitButton></Link>
         </S.SearchBarDiv>
     )
 }

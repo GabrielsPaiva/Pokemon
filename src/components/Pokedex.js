@@ -1,114 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import * as S from "../styles/PokedexStyle"
 
 // images
 import waterBackground from "../assets/waterBackground.png"
 import grassBackground from "../assets/grassBackground.png"
 import fireBackground from "../assets/fireBackground.png"
 import generalBackground from "../assets/generalBackground.png"
-import styled from 'styled-components'
-
-const Div = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-evenly;
-margin: 15px;
-height: fit-content;
-`
-const CardBox = styled.div`
-display: flex;
-justify-content: space-between;
-border: 1px solid #000;
-border-radius: 10px;
-margin: 10px 10px 0 0;
-width: 260px;
-height: 120px;
-cursor: pointer;
--moz-transition: all 0.5s;
--webkit-transition: all 0.5s;
-transition: all 0.5s;
-&:hover{
-    -moz-transform: scale(1.05);
-    -webkit-transform: scale(1.05);
-    transform: scale(1.05);
-}
-`
-const PokemonInfo = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-left: 8px;
-width: 42%;
-height: 100%;
-`
-const PokemonImage = styled.img`
-
-`
-const PokemonName = styled.p`
-color: white;
-font-size: 14px;
-text-transform: uppercase;
-`
-const PokemonAbilities = styled.div`
-display: flex;
-flex-direction: column-reverse;
-justify-content: space-between;
-align-items: center;
-width: 50%;
-`
-const PokemonTypeBox = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-height: 50%;
-`
-const PokemonTypeBackground = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-border-radius: 5px;
-width: 60%;
-height: 50%;
-`
-const PokemonType = styled.h2`
-font-size: 14px;
-text-transform: uppercase;
-`
-const AbilitiesBox = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-evenly;
-align-items: space-between;
-width: 100%;
-`
-const AbilityCard = styled.div`
-display: flex;
-justify-content: space-evenly;
-align-items: space-between;
-margin-bottom: 2px;
-width:  60%;
-height: fit-content;
-`
-const AbilityBackground = styled.div`
-background-color: green;
-display: flex;
-justify-content: center;
-align-items: center;
-margin-bottom: 5px;
-border-radius: 2px;
-width: 95%;
-height: 100%;
-`
-const Ability = styled.p`
-color: white;
-font-size: 9px;
-font-weight: 700px;
-text-align: center;
-text-transform: uppercase;
-`
-
+import favoriteIcon from '../assets/favorite_icon.png'
+import redFavoriteIcon from "../assets/favoriteRed_icon.png"
 
 export default function Pokedex({ pokemon }) {
+    const [favorite, setFavorite] = useState()
 
     const pokemonTypeColor = (item) => {
         if (item.types[0].type.name === "grass") {
@@ -155,41 +57,58 @@ export default function Pokedex({ pokemon }) {
         }
     }
 
-    console.log(pokemon[0])
+    const pokemonFavoriteList = () => {
+        let pokemonNames = pokemon.map(item => {
+            return { pokemon: item.name, favorite: false }
+        })
+        setFavorite([...pokemonNames])
+    }
+    const toggleFavorite = (id) => {
+        let newFavorite = [...favorite, favorite[id].favorite ? favorite[id].favorite = false : favorite[id].favorite = true ]
+        newFavorite.pop()
+        setFavorite([...newFavorite])
+    }
+
+    useEffect(() => {
+        pokemonFavoriteList()
+    }, [])
+    const pokedexReturn = () => {
+        return (
+            <S.Div>
+                {pokemon ? pokemon.map((item, id) => (
+                    <S.CardBox key={id} style={{ backgroundImage: pokemonTypeBackground(item), backgroundPosition: "center center" }}>
+                        <S.PokemonInfo>
+                            <S.FavoriteIconBox>
+                                <S.FavoriteIcon src={!favorite ? favoriteIcon : favorite[id].favorite ? redFavoriteIcon : favoriteIcon} onClick={() => {toggleFavorite(id)}} alt='um circulo com o formato de coração no meio' />
+                            </S.FavoriteIconBox>
+                            <S.PokemonImage src={item.sprites.front_default} alt={pokemon[0].name} />
+                            <S.PokemonName>{item.name}</S.PokemonName>
+                        </S.PokemonInfo>
+                        <S.PokemonAbilities>
+                            <S.AbilitiesBox>
+                                {item.abilities.map((item, id) => (
+                                    <S.AbilityCard key={id}>
+                                        <S.AbilityBackground>
+                                            <S.Ability>{item.ability.name}</S.Ability>
+                                        </S.AbilityBackground>
+                                    </S.AbilityCard>
+                                ))}
+                            </S.AbilitiesBox>
+                            <S.PokemonTypeBox>
+                                <S.PokemonTypeBackground style={{ backgroundColor: pokemonTypeColor(item) }}>
+                                    <S.PokemonType>{item.types[0].type.name}</S.PokemonType>
+                                </S.PokemonTypeBackground>
+                            </S.PokemonTypeBox>
+                        </S.PokemonAbilities>
+                    </S.CardBox>
+                )) : ' '}
+            </S.Div>
+        )
+    }
+
     return (
-        <Div>
-            {pokemon ? pokemon.map((item, id) => (
-                <CardBox key={id} style={{ backgroundImage: pokemonTypeBackground(item), backgroundPosition: "center center" }}>
-                    <PokemonInfo>
-                        <PokemonImage src={item.sprites.front_default} alt={pokemon[0].name} />
-                        <PokemonName>{item.name}</PokemonName>
-                    </PokemonInfo>
-                    <PokemonAbilities>
-                        <AbilitiesBox>
-                            {item.abilities.map((item, id) => (
-                                <AbilityCard key={id}>
-                                    <AbilityBackground>
-                                        <Ability>{item.ability.name}</Ability>
-                                    </AbilityBackground>
-                                </AbilityCard>
-                            ))}
-                        </AbilitiesBox>
-                        <PokemonTypeBox>
-                            <PokemonTypeBackground style={{ backgroundColor: pokemonTypeColor(item) }}>
-                                <PokemonType>{item.types[0].type.name}</PokemonType>
-                            </PokemonTypeBackground>
-                        </PokemonTypeBox>
-                    </PokemonAbilities>
-                </CardBox>
-            )) : ' '}
-        </Div>
+        <>
+            {pokedexReturn()}
+        </>
     )
 }
-
-
-
-// {pokemon ? pokemon.map( (item, id) => (
-//     <div key={id}>
-//         <p>{item.name}</p>
-//     </div>
-// )) : ' '}

@@ -6,6 +6,13 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+
+.buttonLink{
+        display: flex;
+        justify-content: center;
+        text-decoration: none;
+        width: 12%;
+}
 `
 export const SearchInput = styled.input`
 background-color: #2C2C2C;
@@ -23,13 +30,13 @@ background-color: white;
 font-size: 18px;
 text-align: center;
 border-radius: 10px;
-width: 12%;
+width: 80%;
 line-height: 50px;
 transition: all 0.5s ease-in-out;
 cursor: pointer;
 
 &:hover{
-        width: 14%;
+        width: 100%;
         line-height: 50px;
         background-color: white;
         border-radius: 10px;

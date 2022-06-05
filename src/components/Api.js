@@ -30,3 +30,13 @@ export const getInfo = async (pokemon) => {
         console.log('getPokemon error:', error)
     }
 }
+export const getDescription = async (pokemon) => {
+    try {
+        let url = `https://pokeapi.co/api/v2/pokemon-species/${pokemon}/`
+        const response = await fetch(url)
+        console.log(response)
+        return response.json()
+    } catch (error) {
+        console.log('getPokemon error:', error)
+    }
+}

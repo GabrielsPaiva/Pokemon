@@ -2,6 +2,8 @@ import React from "react"
 import Logo from "../assets/logo.png"
 import styled from "styled-components"
 
+import { Link } from "react-router-dom"
+
 const Nav = styled.nav`
 height: 20vh;
 display: flex;
@@ -13,7 +15,7 @@ export default function Navbar() {
     return (
         <Nav>
             <div>
-                <img src={Logo} alt='' />
+                <Link to="/"><img src={Logo} alt='' /></Link>
             </div>
         </Nav>
     )
